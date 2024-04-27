@@ -1,4 +1,11 @@
-import { Body, Controller, Post, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  HttpCode,
+  HttpStatus,
+  Get,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BaseUser } from 'src/user/dto/base-user.dto';
@@ -31,11 +38,21 @@ export class AuthController {
   })
   signUp(@Body() signUpDto: Record<string, any>) {
     const payload = {
-      username: signUpDto.username,
       email: signUpDto.email,
       password: signUpDto.password,
       createdAt: new Date(),
     };
     return this.authService.signUp(payload);
+  }
+  @Public()
+  @Get('users')
+  @ApiOperation({ summary: 'View All Users' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of all users',
+    type: [BaseUser], // Assuming BaseUser DTO represents user data
+  })
+  viewAllUsers() {
+    return this.authService.getAllUsers();
   }
 }
