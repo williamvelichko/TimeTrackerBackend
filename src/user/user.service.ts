@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -22,17 +23,18 @@ export class UsersService {
       throw error;
     }
   }
-
   async create(createUserDto: CreateUserDto) {
     try {
+      const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
       const result = await this.userRepository.save({
         ...createUserDto,
+        password: hashedPassword,
         createdAt: new Date(),
       });
 
       return result;
     } catch (error) {
-      console.error('Error crearting user', error);
+      console.error('Error creating user', error);
       throw error;
     }
   }

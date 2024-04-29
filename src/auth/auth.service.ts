@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class AuthService {
   constructor(
@@ -14,9 +15,10 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('User with this email doesnt exist');
     }
+    const isPasswordValid = await bcrypt.compare(pass, user.password);
 
-    if (user?.password !== pass) {
-      throw new UnauthorizedException('Wrong Password');
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Incorrect password');
     }
 
     const payload = { sub: user.id, email: user.email };
@@ -26,19 +28,17 @@ export class AuthService {
   }
   async signUp(payload: CreateUserDto) {
     const userResult = await this.usersService.findOneBy(payload.email);
-    console.log(userResult);
+
     if (userResult) {
       throw new UnauthorizedException('User with this email already exists');
     }
-    //return await this.usersService.deleteUsers();
+
     const user = await this.usersService.create(payload);
-    console.log(user);
     return user;
   }
 
   async getAllUsers() {
     const result = await this.usersService.viewUsers();
     return result;
-    // return await this.usersService.deleteUsers();
   }
 }
