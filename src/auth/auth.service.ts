@@ -13,12 +13,12 @@ export class AuthService {
     const user = await this.usersService.findOneBy(email);
 
     if (!user) {
-      throw new UnauthorizedException('User with this email doesnt exist');
+      throw new UnauthorizedException(`User with this email doesn't exist`);
     }
     const isPasswordValid = await bcrypt.compare(pass, user.password);
 
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Incorrect password');
+      throw new UnauthorizedException(`Incorrect password`);
     }
 
     const payload = { sub: user.id, email: user.email };
@@ -30,7 +30,7 @@ export class AuthService {
     const userResult = await this.usersService.findOneBy(payload.email);
 
     if (userResult) {
-      throw new UnauthorizedException('User with this email already exists');
+      throw new UnauthorizedException(`User with this email already exists`);
     }
 
     const user = await this.usersService.create(payload);

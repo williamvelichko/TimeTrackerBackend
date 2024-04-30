@@ -16,7 +16,7 @@ dotenv.config();
       host: 'localhost',
       port: 3306,
       username: process.env.DATABASE_USERNAME,
-      password: process.env.MYSQL_PASSWORD,
+      password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_LINK,
       entities: [UserEntity],
       // synchronize: process.env.NODE_ENV !== 'production',
