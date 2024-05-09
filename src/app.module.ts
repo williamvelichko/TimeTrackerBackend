@@ -6,11 +6,13 @@ import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user/user.entity';
 import { AuthController } from './auth/auth.controller';
+import { ConfigModule } from '@nestjs/config';
 const dotenv = require('dotenv');
 dotenv.config();
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
