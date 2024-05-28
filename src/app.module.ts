@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user/user.entity';
 import { AuthController } from './auth/auth.controller';
 import { ConfigModule } from '@nestjs/config';
+import { ProjectModule } from './project/project.module';
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -27,6 +28,7 @@ dotenv.config();
     }),
     HelloWorldModule,
     AuthModule,
+    ProjectModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService],
