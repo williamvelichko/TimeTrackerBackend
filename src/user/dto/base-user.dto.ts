@@ -3,6 +3,8 @@ export class BaseUser {
   @ApiProperty()
   id?: number;
   @ApiProperty()
+  name: string;
+  @ApiProperty()
   email: string;
   @ApiProperty()
   password: string;
