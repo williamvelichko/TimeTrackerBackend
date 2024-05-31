@@ -9,6 +9,8 @@ import { AuthController } from './auth/auth.controller';
 import { ConfigModule } from '@nestjs/config';
 import { TimeController } from './time/time.controller';
 import { TimeModule } from './time/time.module';
+import { ProjectModule } from './project/project.module';
+import { Project } from './project/project.entity';
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -22,7 +24,7 @@ dotenv.config();
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_LINK,
-      entities: [UserEntity],
+      entities: [UserEntity, Project],
       // synchronize: process.env.NODE_ENV !== 'production',
       synchronize: false,
       //logging: process.env.NODE_ENV !== 'production',
@@ -30,6 +32,8 @@ dotenv.config();
     HelloWorldModule,
     AuthModule,
     TimeModule,
+
+    ProjectModule,
   ],
   controllers: [AppController, AuthController, TimeController],
   providers: [AppService],
