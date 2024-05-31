@@ -8,6 +8,7 @@ import {
   Body,
   HttpCode,
   HttpStatus,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ProjectService } from './project.service';
@@ -46,7 +47,9 @@ export class ProjectController {
   }
 
   @Delete(':id')
-  async deleteProject(@Param('id') id: string) {
+  async deleteProject(
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ): Promise<{ message: string }> {
     return await this.projectService.deleteProject(id);
   }
 }

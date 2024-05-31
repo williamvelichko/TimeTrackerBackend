@@ -43,10 +43,11 @@ export class ProjectService {
     return updatedProject;
   }
 
-  async deleteProject(id: string): Promise<void> {
+  async deleteProject(id: string): Promise<{ message: string }> {
     const result = await this.projectRepository.delete(id);
     if (result.affected === 0) {
       throw new NotFoundException(`Project with ID ${id} not found`);
     }
+    return { message: `Project with ID ${id} successfully deleted` };
   }
 }
