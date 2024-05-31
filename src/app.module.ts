@@ -7,6 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user/user.entity';
 import { AuthController } from './auth/auth.controller';
 import { ConfigModule } from '@nestjs/config';
+import { TimeController } from './time/time.controller';
+import { TimeModule } from './time/time.module';
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -27,8 +29,9 @@ dotenv.config();
     }),
     HelloWorldModule,
     AuthModule,
+    TimeModule,
   ],
-  controllers: [AppController, AuthController],
+  controllers: [AppController, AuthController, TimeController],
   providers: [AppService],
 })
 export class AppModule {}
