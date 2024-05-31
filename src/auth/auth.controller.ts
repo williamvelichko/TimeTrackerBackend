@@ -40,6 +40,7 @@ export class AuthController {
     const payload = {
       email: signUpDto.email,
       password: signUpDto.password,
+      name: '',
       createdAt: new Date(),
     };
     return this.authService.signUp(payload);
