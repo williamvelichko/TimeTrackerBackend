@@ -29,7 +29,7 @@ export class ProjectController {
   }
 
   @Get(':id')
-  async getProjectById(@Param('id') id: string) {
+  async getProjectById(@Param('id') id: number) {
     return await this.projectService.getProjectById(id);
   }
 
@@ -40,7 +40,7 @@ export class ProjectController {
 
   @Put(':id')
   async updateProject(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updateProjectDto: UpdateProjectDto,
   ) {
     return await this.projectService.updateProject(id, updateProjectDto);
@@ -48,7 +48,7 @@ export class ProjectController {
 
   @Delete(':id')
   async deleteProject(
-    @Param('id', new ParseUUIDPipe()) id: string,
+    @Param('id', new ParseUUIDPipe()) id: number,
   ): Promise<{ message: string }> {
     return await this.projectService.deleteProject(id);
   }

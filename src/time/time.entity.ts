@@ -5,8 +5,8 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { ProjectEntity } from '../project/project.entity'; // Adjust the path as necessary
-import { UserEntity } from '../user/user.entity'; // Adjust the path as necessary
+import { Project } from '../project/project.entity';
+import { UserEntity } from '../user/user.entity';
 
 @Entity('time')
 export class TimeEntity {
@@ -26,15 +26,19 @@ export class TimeEntity {
   endTime: string;
 
   @Column({ type: 'int', nullable: true })
-  totalTime: number; // Total time in minutes or seconds
+  totalTime: number;
 
-  @ManyToOne(() => ProjectEntity, (project) => project.times, {
-    nullable: false,
-  })
+  @Column()
+  projectId: number;
+
+  @ManyToOne(() => Project)
   @JoinColumn({ name: 'projectId' })
-  project: ProjectEntity;
+  project: Project;
 
-  @ManyToOne(() => UserEntity, (user) => user.times, { nullable: false })
+  @Column()
+  userId: number;
+
+  @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'userId' })
   user: UserEntity;
 }

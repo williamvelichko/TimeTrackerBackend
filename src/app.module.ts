@@ -11,6 +11,7 @@ import { TimeController } from './time/time.controller';
 import { TimeModule } from './time/time.module';
 import { ProjectModule } from './project/project.module';
 import { Project } from './project/project.entity';
+import { TimeEntity } from './time/time.entity';
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -24,15 +25,12 @@ dotenv.config();
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_LINK,
-      entities: [UserEntity, Project],
-      // synchronize: process.env.NODE_ENV !== 'production',
+      entities: [UserEntity, Project, TimeEntity],
       synchronize: false,
-      //logging: process.env.NODE_ENV !== 'production',
     }),
     HelloWorldModule,
     AuthModule,
     TimeModule,
-
     ProjectModule,
   ],
   controllers: [AppController, AuthController, TimeController],
