@@ -3,12 +3,17 @@ import {
   PrimaryGeneratedColumn,
   Column,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { TimeEntity } from '../time/time.entity';
 
 @Entity()
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  name: string;
 
   @Column()
   email: string;
@@ -21,4 +26,7 @@ export class UserEntity {
 
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
+
+  @OneToMany(() => TimeEntity, (time) => time.user)
+  timeEntries: TimeEntity[];
 }
