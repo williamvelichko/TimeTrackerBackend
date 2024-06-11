@@ -29,25 +29,23 @@ export class TimeService {
       throw new NotFoundException('Project or User not found');
     }
 
-    const startTime = createTimeDto.startTime;
-    const endTime = createTimeDto.endTime;
-
-    const startTimeDate = new Date(`1970-01-01T${startTime}`);
-    const endTimeDate = new Date(`1970-01-01T${endTime}`);
+    const projectDate = new Date(createTimeDto.projectDate);
+    const startTimeDate = new Date(projectDate + 'T' + createTimeDto.startTime);
+    const endTimeDate = new Date(projectDate + 'T' + createTimeDto.endTime);
     const totalTime = (endTimeDate.getTime() - startTimeDate.getTime()) / 60000; // in minutes
+
+    console.log(projectDate, startTimeDate, endTimeDate, totalTime);
 
     const newTime = this.timeRepository.create({
       ...createTimeDto,
-      startTime,
-      endTime,
-      totalTime,
       project,
       user,
+      projectDate,
+      totalTime,
     });
 
     return this.timeRepository.save(newTime);
   }
-
   async getAllByUser(userId: number): Promise<TimeEntity[]> {
     const times = await this.timeRepository.find({
       where: { user: { id: userId } },
